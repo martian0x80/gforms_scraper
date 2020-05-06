@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import tempfile
 import sys
 import gsearch
+from colorama import Fore,Back,Style,init
 import webbrowser
 temp=tempfile.TemporaryFile(mode='w+t')
 ques=[]
@@ -25,10 +26,10 @@ for j in range(0,len(ques)):
 		pretty = ques[j]
 		data = (pretty+' ')
 		temp.write(data)
-		print(data, file=sys.stdout, sep=',')
+		print(Style.DIM+data+Style.RESET_ALL, file=sys.stdout, sep=',')
 	else:
 		del ques[j]
-print('+---------------------------------------------------------------------------------------------------------+')
+print(Fore.GREEN+'+---------------------------------------------------------------------------------------------------------+')
 def query():
 	bad_words=['address','Email','Name and Section']
 	for i in range(0,len(ques)):
@@ -44,21 +45,29 @@ print(query())
 print(len(ques)-len(st_query)," miscellaneous questions detected\ncontinuing.....\n")
 
 def finalizing():
+	
 	for i in range(2,len(st_query)):
+		
 		if len(st_query)<len(ques):
+			
 			try:
-				print('things going good.......\n')
-				print('loading pages....\nsearching questions',st_query[i],'\n')
+				print(Fore.MAGENTA+'things going good.......\n')
+				print('loading pages....\nsearching questions'+Fore.RESET,st_query[i],'\n')
 				gsearch.gsearch(st_query[i])
 				webbrowser.open("https://google.com/search?q={0}".format(str(st_query[i])))
-				top=raw_input("Open the top sites for the question itself??\n>> ")
+				top=raw_input(Fore.CYAN+"Open the top sites for the question itself??\n>> ")
 				if top=='yes' or top=='y' or top=='Yes':
-					webbrowser.open(gsearch.results[0]['link'] and gsearch.results[1]['link'] and gsearch.results[2]['link'])
-					print('moving to next question...\n')
+					for i in range(0,len(gsearch.results)):
+						print('the first 3 top sites are openining....if exists\n')
+						webbrowser.open(gsearch.results[i]['link'])
+					print(Fore.GREEN+'moving to next question...\n')
 				else:
-					print('moving to next question...\n')
+					
+					print(Fore.GREEN+'moving to next question...\n')
+					
 			except KeyboardInterrupt:
-				op=raw_input('exit , right ?? > ')
+				op=raw_input(Fore.RED+'\nexit , right ?? > '+Fore.RESET)
+				
 				if op=='yes' or op=='y' or op=='yeah':
 					print("Okay,dude..")
 					sys.exit(1)
@@ -66,3 +75,4 @@ def finalizing():
 					continue
 finalizing()
 print('# questions and results saved to {0} at {1}'.format(str(temp.name),str(tempfile.gettempdir())))
+#iamthefkingdeveloper

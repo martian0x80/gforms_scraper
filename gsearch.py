@@ -25,5 +25,4 @@ def gsearch(uu):
                     "link": link
                 }
                 results.append(item)
-                print(results)
                 return results;
