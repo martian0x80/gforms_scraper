@@ -17,6 +17,8 @@ d =  requests.get("https://docs.google.com/forms/d/e/1FAIpQLSc-0yT13LJNwE5VHTu10
 soup=BeautifulSoup(d.content.decode('utf-8'),'html.parser')
 totalpage=soup.find(class_='freebirdFormviewerViewItemList')
 tr_ques=totalpage.find_all(class_='freebirdFormviewerViewItemsItemItemTitleContainer')
+#experimental
+#tr_options=totalpage.find_all(class_='freebirdFormviewerViewItemsRadioChoicesContainer')
 for i in tr_ques:
 	lines = i.get_text().encode('ascii','ignore')
 	ques.append(lines)
@@ -55,15 +57,16 @@ def finalizing():
 				print('loading pages....\nsearching questions'+Fore.RESET,st_query[i],'\n')
 				gsearch.gsearch(st_query[i])
 				webbrowser.open("https://google.com/search?q={0}".format(str(st_query[i])))
-				top=raw_input(Fore.CYAN+"Open the top sites for the question itself??\n>> ")
+				#made it slow,but works great
+				'''top=raw_input(Fore.CYAN+"Open the top sites for the question itself??\n>> ")
 				if top=='yes' or top=='y' or top=='Yes':
 					for i in range(0,len(gsearch.results)):
 						print('the first 3 top sites are openining....if exists\n')
 						webbrowser.open(gsearch.results[i]['link'])
 					print(Fore.GREEN+'moving to next question...\n')
 				else:
-					
-					print(Fore.GREEN+'moving to next question...\n')
+				'''	
+				print(Fore.GREEN+'moving to next question...\n')
 					
 			except KeyboardInterrupt:
 				op=raw_input(Fore.RED+'\nexit , right ?? > '+Fore.RESET)
